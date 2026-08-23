@@ -1,0 +1,24 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "seihouse-skills",
+  "version": "1.0.0",
+  "description": "Official AI Agent Skills Suite for SEIHouse Productions.",
+  "author": {
+    "name": "SEIHouse Productions",
+    "url": "https://github.com/SENSEIDUKES"
+  },
+  "homepage": "https://github.com/SENSEIDUKES/SEIHOUSE-SKILLS",
+  "repository": "https://github.com/SENSEIDUKES/SEIHOUSE-SKILLS",
+  "license": "MIT",
+  "keywords": [
+    "seihouse",
+    "agent-skills",
+    "agent-plugins",
+    "creative-coding",
+    "ui",
+    "audio",
+    "music",
+    "verification",
+    "pr-review"
+  ]
+}

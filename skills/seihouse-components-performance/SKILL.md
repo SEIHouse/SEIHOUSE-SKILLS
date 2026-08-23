@@ -1,5 +1,5 @@
 ---
-name: SEIHouse Components Performance
+name: seihouse-components-performance
 description: Audit and optimize the performance, resilience, loading behavior, and device adaptability of a specified component while preserving its intended design and functionality.
 ---
 

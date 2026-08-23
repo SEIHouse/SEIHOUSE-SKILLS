@@ -1,5 +1,5 @@
 ---
-name: SEIHouse Layout Optimization
+name: seihouse-layout-optimization
 description: Audit and optimize a specified component so its composition, hierarchy, usability, and visual quality remain intentional across mobile, tablet, laptop, desktop, portrait, landscape, narrow, wide, and short-height viewports.
 ---
 

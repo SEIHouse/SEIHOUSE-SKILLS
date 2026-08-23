@@ -1,5 +1,5 @@
 ---
-name: SEIHouse Gemini Verification Loop
+name: seihouse-gemini-verification-loop
 description: Makes Gemini slow down, verify implementation work in multiple distinct passes, fix confirmed in-scope defects, and avoid unrequested additions or broad refactors.
 ---
 

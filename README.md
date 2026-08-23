@@ -2,7 +2,7 @@
 
 Official AI Agent Skills Suite for **SEIHouse Productions**.
 
-This repository contains the specialized prompt instructions, architectural conventions, UI translation tools, verification loops, and PR review workflows used by coding agents (Antigravity, Codex, Claude, Gemini, Kimi, Cursor) across the SEIHouse ecosystem.
+This repository is a fully conformant **Agent Plugin** built in accordance with the [Agent Plugins Specification (v1.0.0)](https://agent-plugins.org/specification) and the [Agent Skills Specification](https://agentskills.io/specification). It can be directly imported and discovered by any compliant AI agent client, runtime, or IDE (including Antigravity, Codex, Claude Code, Gemini, Kimi, and Cursor).
 
 ---
 

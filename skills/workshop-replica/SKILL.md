@@ -1,8 +1,9 @@
 ---
 name: workshop-replica
 description: Create a faithful, isolated Workshop replica of a real application page, component, or flow using local mock state while preserving portability back to the source app.
-version: 1.1.0
-last_updated: 2026-07-31
+metadata:
+  version: "1.1.0"
+  last_updated: "2026-07-31"
 ---
 
 # Workshop Replica Skill
