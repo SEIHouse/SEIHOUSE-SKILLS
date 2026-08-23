@@ -1,0 +1,12 @@
+interface:
+  display_name: Sensei Skill
+  short_description: Plain-language engineering impact brief
+  default_prompt: Use $sensei-skill to explain this technical work, its effects, and
+    the best next step in natural language.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
