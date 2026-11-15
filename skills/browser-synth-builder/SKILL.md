@@ -1,60 +1,57 @@
 ---
 name: browser-synth-builder
-description: Build a complete, runnable, playable browser-based synthesizer ("VST-style synth in the browser") from requests like "make me a playable VST synth", "build a synthesizer with a working keyboard", "create a web instrument / playable piano / Web Audio synth", or any ask for a sound-producing music instrument page with a modern instrument design. Use when the deliverable must produce sound immediately in a browser preview without a DAW, plugins, or installation. Covers Web Audio implementation, onscreen keyboards with touch/mouse/computer-keyboard input, sound controls, and polished instrument UI. Not for native/DAW plugin development (VST3/AU), MIDI hardware integrations, or DAW host compatibility.
+description: Build a playable browser synthesizer with Web Audio, an onscreen keyboard, touch/mouse/computer-keyboard input, and working sound controls. Use for web instruments that run without a DAW or native plugins; not native VST/AU development or hardware MIDI integration.
+metadata:
+  version: "2.0.0"
+  last_updated: "2026-11-14"
 ---
 
 # Browser Synth Builder
 
-Build a synthesizer that runs entirely in the browser using the Web Audio API — no build step, no external audio files, no network dependencies. A single self-contained HTML file (or a small static site) is the ideal shape so it opens and plays immediately in any web preview.
+Deliver a runnable instrument, usually a self-contained HTML page or small static
+site with no external audio or runtime network dependencies. In an existing app,
+use its tooling rather than forcing a separate architecture. Choose a concept,
+visual identity, and synthesis approach suited to the request; plain Web Audio is
+sufficient and does not require a plugin host or a particular framework.
 
-## Creative Freedom — Keep the Prompt Open-Ended
+## Playable baseline
 
-The point of this task is creative range. Choose your own:
+- A musical default patch sounds after the first pointer or keyboard gesture that
+  creates/resumes the AudioContext. Show an actionable failure if audio cannot start.
+- Provide a piano-style keyboard with two octaves, or one octave and octave shifting,
+  and visible pressed feedback for touch, mouse, and computer-keyboard input.
+- Include octave controls, master volume, and at least four useful sound-shaping
+  controls. Every displayed control must work and continuous changes should be smooth.
+- Make the instrument readable and playable around 360px portrait width. Use one
+  octave plus shifting when needed instead of squeezing two octaves into tiny keys.
+  Keep primary controls reachable and secondary controls accessible through sensible
+  reflow or scrolling. Preserve zoom outside the playing surface.
 
-- **Concept and identity** — name, personality, and visual language of the instrument.
-- **Synthesis method** — subtractive, FM, additive, wavetable-ish, physical-modeling-flavored, sample-free drum/keys hybrids, or any Web Audio technique.
-- **Controls, layout, and aesthetics** — knobs, sliders, pads, sequencer extras, theme, typography.
+## Audio and input safeguards
 
-Do NOT require or suggest WAM, WebAssembly, Faust, DAW integration, plugin-host compatibility, external libraries, or any fixed architecture. Plain Web Audio API is sufficient and preferred.
+Read [Web Audio patterns](references/web-audio-patterns.md) before implementing the
+engine or input handling. Preserve these invariants while choosing the sound design:
 
-## Non-Negotiable Requirements
+- Resume audio from a user gesture and verify actual playback when tools allow it.
+- Namespace pointer and keyboard identities and retain one consistent voice record.
+- Release on pointerup, cancellation, lost capture, keyup, blur, and page hiding.
+  Handle overlapping inputs and voice stealing without cutting gain abruptly.
+- For captured-pointer glissando, hit-test coordinates during pointermove; do not
+  depend on sibling pointerenter events. Keep pressed feedback correct when several
+  inputs hold the same pitch.
+- Use bounded polyphony, gain headroom, a compressor, click-resistant envelopes,
+  and cleanup of stopped voices. A compressor does not guarantee distortion-free output.
+- Scope touch-action to the playing surface. Do not hijack typing, form controls,
+  modifier shortcuts, or normal page interactions.
 
-Every delivered synth must:
+## Verify and deliver
 
-1. **Produce sound immediately** — a musical default patch; notes audible on the first key press after one user gesture (browser autoplay policy requires a gesture: resume the AudioContext inside a pointer/key handler).
-2. **Include a working onscreen keyboard** — piano-style keys spanning at least two octaves (or one octave plus octave-shift buttons), with pressed-state visual feedback.
-3. **Support three input modes** — touch, mouse, and computer keyboard (e.g. A W S E D F T G Y H U J K across an octave). Include octave up/down controls so the full range is reachable.
-4. **Provide useful sound controls** — at least four controls that audibly shape the sound (e.g. oscillator/waveform, filter cutoff, resonance, ADSR stages, detune, delay/reverb amount), plus a master volume. Every visible control must actually work.
-5. **Present a polished, modern instrument interface** — deliberate visual design, readable labels, coherent color/type, and a layout that remains fully usable at mobile portrait width (~360px).
+Run relevant project checks and exercise the actual preview when available. Verify
+input modes, glissando, overlapping/repeated notes, release outside the keys,
+cancellation, blur/backgrounding, octave changes, sound controls, volume, mobile
+layout, and console errors. Listen for clicks, stuck notes, silence, and distortion
+when audible testing is available; a simulated audio graph does not prove sound quality.
 
-## Safeguards (Must Pass All)
-
-Guard against the six classic failures. Implementation patterns for each are in [references/web-audio-patterns.md](references/web-audio-patterns.md) — read it before writing the audio engine.
-
-- **Silent audio** — create/resume `AudioContext` on the first user gesture; verify the default patch is audible at moderate volume.
-- **Stuck notes** — release notes on `pointerup`/`pointercancel`/window `blur` and `keyup`; track active notes by pointer ID and key code; cap polyphony with voice stealing.
-- **Clicks and pops** — never switch gain instantly; use short attack/release ramps and stop oscillators only after the release tail.
-- **Excessive volume** — scale per-voice gain by active voice count, keep master headroom, route through a gentle limiter (`DynamicsCompressor`).
-- **Broken controls** — wire every knob/slider/button to a real audio parameter; smooth continuous changes to avoid zipper noise.
-- **Unusable mobile layout** — `touch-action: none` on keys, preventDefault on key touches so the page doesn't scroll, touch-sized keys, no hover-only interactions.
-
-## Workflow
-
-1. Pick a concept, synthesis approach, and control set (your creative choice).
-2. Build the audio engine following references/web-audio-patterns.md.
-3. Build the onscreen keyboard and all three input modes.
-4. Design the interface; verify it at desktop and ~360px mobile widths.
-5. Run the acceptance checklist below before delivering.
-6. Deliver as a browser-openable page (single `index.html` or static site) through the environment's web preview/versioning mechanism.
-
-## Acceptance Checklist
-
-Verify in the actual preview before delivery:
-
-- Pressing a key with mouse, touch, and computer keyboard each produces sound with visible key feedback.
-- Sliding a finger/cursor across keys plays a clean glissando with no stuck notes afterward.
-- Releasing all inputs (including window blur mid-note) leaves no ringing notes.
-- Fast repeated note on/off produces no audible clicks.
-- Every control audibly changes the sound; master volume reaches silence at minimum and stays undistorted at maximum.
-- At 360px portrait width, all keys and controls are reachable and playable.
-- No console errors.
+Deliver the page through the available preview mechanism and explain how to open
+and play it. State which browser, touch, audible, and device checks actually ran and
+which remain unverified; do not claim physical-device results from emulation.

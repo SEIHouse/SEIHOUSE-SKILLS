@@ -1,0 +1,37 @@
+{
+  "name": "seihouse-skills",
+  "version": "2.0.0",
+  "description": "Ten model-neutral AI agent skills for SEIHouse development, design, verification, and delivery.",
+  "author": {
+    "name": "SEIHouse Productions",
+    "url": "https://github.com/SEIHouse"
+  },
+  "homepage": "https://github.com/SEIHouse/SEIHOUSE-SKILLS",
+  "repository": "https://github.com/SEIHouse/SEIHOUSE-SKILLS",
+  "license": "MIT",
+  "keywords": [
+    "seihouse",
+    "agent-skills",
+    "creative-coding",
+    "ui",
+    "audio",
+    "verification",
+    "pr-review",
+    "agent-plugins",
+    "music"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SEIHouse Skills",
+    "shortDescription": "SEIHouse's development, design, and release skills.",
+    "longDescription": "Ten SEIHouse skills for browser audio, creative UI, planning, codebase ownership, performance, verification, responsive layout, pull requests, communication, and Workshop replicas.",
+    "developerName": "SEIHouse Productions",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Apply SEIHouse codebase conventions to this repository.",
+      "Use seihouse-verification to review my changes and run the relevant checks.",
+      "Help me build a browser-based Web Audio instrument."
+    ]
+  }
+}

@@ -1,9 +1,10 @@
 # SEIHouse PR
 
-Use this skill after an implementation task changes repository files.
+Use `seihouse-pr` after implementation to verify the final change, commit and push
+the task branch, and create or update its PR. Local-only instructions override
+publishing. Planning and review-only tasks do not trigger publication.
 
-Recommended instruction:
-
-> After completing the implementation, invoke `seihouse-pr` to verify branch scope, commit and push the relevant work, and create or update the pull request.
-
-It is intentionally lightweight and does not require a separate PR review step.
+The workflow uses `seihouse-verification` and reuses its completed checks. After
+publishing, monitor checks and comments, fix actionable feedback on the same branch,
+and report pending or blocked conditions accurately. It does not authorize a merge
+or deployment.

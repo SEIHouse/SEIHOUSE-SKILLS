@@ -1,106 +1,53 @@
 ---
 name: seihouse-components-performance
-description: Audit and optimize the performance, resilience, loading behavior, and device adaptability of a specified component while preserving its intended design and functionality.
+description: Diagnose and optimize a specified UI surface's runtime performance, loading, and resilience while preserving its design and functionality. Use for slow interactions, excessive work, resource leaks, or poor behavior on constrained devices and networks.
+metadata:
+  version: "2.0.0"
+  last_updated: "2026-11-14"
 ---
 
 # SEIHouse Components Performance
 
-Use this skill when the user points to a component, page section, interaction, animation, or UI surface and asks for performance optimization.
+Focus on the named component and the paths directly responsible for its performance.
+Preserve its visual identity, product behavior, accessibility, and intended effects.
+For an audit-only request, report evidence and recommendations without implementing.
 
-## Objective
+## Establish the bottleneck
 
-Audit first, then optimize the specified component so it runs smoothly, loads responsibly, and remains dependable across mobile devices, weaker hardware, slow or unstable internet, and normal production conditions.
+Observe a baseline or inspect concrete evidence before optimizing. Check the likely
+causes for the affected path:
 
-Preserve the component's intended appearance, atmosphere, behavior, accessibility, and product purpose.
+- repeated rendering, expensive computation, layout measurement, or main-thread work;
+- heavy animation, particles, filters, blur, and work continuing while hidden;
+- oversized assets, duplicate requests, blocked loading, or excess payloads;
+- leaked timers, listeners, observers, subscriptions, and audio/graphics resources;
+- broken cache, retry, stale-data, offline, timeout, or re-entry behavior.
 
-## Scope
+Separate measured findings from plausible risks. Do not claim an improvement from a
+code change alone or expand into a repository-wide audit without a verified cause.
 
-Focus on the specified component and the code paths directly required for it to function.
+## Optimize through existing systems
 
-Do not broadly audit or refactor the repository unless a shared issue directly causes the component's performance problem.
+Prioritize the highest-impact verified problem. Reuse the project's caches, loaders,
+asset pipelines, state systems, and shared utilities. Defer nonessential work and
+clean up resources at the correct lifecycle boundary.
 
-## Audit
+Where appropriate, adapt effect density, update frequency, or asset quality to
+device capability and visibility. Preserve the intended atmosphere and functional
+parity rather than removing an effect solely because it has a cost. Add dependencies
+only when they solve the verified problem and fit the existing stack.
 
-Inspect the component for meaningful issues involving:
+Keep network failures recoverable using established UI and retry patterns. Avoid
+duplicate work, repeated restarts, or blocking primary content on secondary assets.
 
-- Unnecessary renders or repeated work
-- Expensive effects, animations, particles, filters, shadows, or blur
-- Large or poorly handled images, audio, video, fonts, or other assets
-- Duplicate, unnecessary, blocked, or poorly timed data requests
-- Slow initial loading or poor perceived responsiveness
-- Excessive JavaScript, layout measurement, or main-thread work
-- Timers, observers, subscriptions, event listeners, or resources that are not cleaned up
-- Memory growth or work continuing while the component is hidden or inactive
-- Missing lazy loading, caching, preloading, batching, or deferred work where appropriate
-- Weak loading, empty, offline, timeout, retry, and error behavior
-- Poor behavior on slower mobile devices or constrained networks
-- Reinvented infrastructure that should use existing SEIHouse or Library systems
+## Validate and report
 
-Identify real, high-impact risks before making changes. Avoid speculative micro-optimization.
+Compare the affected behavior with the baseline using available project tools.
+Select relevant checks for desktop/mobile, slow or failed requests, cached data,
+remount/re-entry, backgrounding, reduced motion, and cleanup. Check directly affected
+Library integration when applicable; do not assume every component belongs to it.
 
-## Optimization Principles
-
-- Fix the highest-impact problems first.
-- Prefer existing SEIHouse utilities, shared components, caches, loaders, asset pipelines, and state systems.
-- Prefer local, understandable changes over large architectural rewrites.
-- Preserve the visual identity and intended experience.
-- Prefer adaptive quality over removing atmosphere.
-- Reduce effect density, update frequency, asset quality, or background work on weaker devices when appropriate.
-- Defer nonessential work until it is needed.
-- Avoid adding new dependencies unless they clearly solve a real problem and fit the existing stack.
-- Do not create parallel loading, caching, or state systems when an established project system already exists.
-- Maintain accessibility, reduced-motion support, and functional parity.
-
-## Network and Device Resilience
-
-Where relevant, ensure the component behaves intentionally under:
-
-- Slow responses
-- Intermittent connectivity
-- Offline or failed requests
-- Delayed assets
-- Cached or stale data
-- Repeated retries
-- Low-memory or lower-performance mobile devices
-- Backgrounding and returning to the app
-
-Use graceful degradation rather than allowing the component to freeze, disappear, repeatedly restart, or block the rest of the interface.
-
-## Validation
-
-Validate the directly affected behavior using the project's existing tools and targeted checks.
-
-At minimum, consider:
-
-- Normal desktop behavior
-- Mobile-sized behavior
-- Slow or delayed network behavior
-- Loading, empty, and error states
-- Re-entry, remounting, or reopening behavior
-- Reduced-motion behavior when animation is involved
-- Cleanup after leaving or hiding the component
-- Whether the optimized component still integrates correctly with the Library
-
-Run only relevant validation. Do not perform a broad repository review unless necessary.
-
-## Guardrails
-
-- Do not substantially redesign the layout.
-- Do not remove intentional effects solely because they have a performance cost.
-- Do not change product behavior without a clear reason.
-- Do not replace stable shared systems with component-specific implementations.
-- Do not claim an improvement without targeted validation or clear evidence.
-- Do not perform unrelated cleanup.
-- Do not narrate lengthy internal reasoning.
-
-If significant layout problems are discovered, flag them separately for `SEIHouse Layout Optimization` rather than expanding the task.
-
-## Completion Report
-
-Provide a concise summary containing:
-
-1. The main performance or resilience problems found
-2. The changes made
-3. How behavior improved on mobile, weak devices, or poor networks
-4. Validation performed
-5. Any meaningful remaining risk or recommended follow-up
+Report the verified bottleneck, changes, supporting measurements or observations,
+and limitations. Do not claim physical-device or poor-network results from static
+inspection. Flag significant layout work separately unless it is required to fix
+the performance defect.
