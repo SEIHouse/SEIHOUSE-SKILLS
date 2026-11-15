@@ -1,145 +1,54 @@
 ---
 name: seihouse-layout-optimization
-description: Audit and optimize a specified component so its composition, hierarchy, usability, and visual quality remain intentional across mobile, tablet, laptop, desktop, portrait, landscape, narrow, wide, and short-height viewports.
+description: Audit and refine a specified UI surface's responsive composition, hierarchy, and usability across viewport sizes and content states. Use for overflow, clipping, cramped or unbalanced layouts, and inaccessible controls while preserving functionality and visual identity.
+metadata:
+  version: "2.0.0"
+  last_updated: "2026-11-14"
 ---
 
 # SEIHouse Layout Optimization
 
-Use this skill when the user points to a component, page section, overlay, modal, animation, or UI surface and asks for it to work consistently across all viewport sizes.
+Focus on the named surface and directly affected layout code. Preserve its identity,
+product behavior, meaningful content, and accessibility. For an audit-only request,
+report findings and recommendations without implementing.
 
-## Objective
+## Inspect the composition
 
-Audit first, then optimize the specified component so it looks intentional, remains usable, and preserves its visual hierarchy across mobile, tablet, laptop, desktop, portrait, landscape, narrow, wide, and short-height screens.
+Identify the focal element, supporting content, required controls, decorative layers,
+anchoring, and relationship to the surrounding page. Inspect:
 
-Preserve the component's identity, atmosphere, behavior, accessibility, and product purpose.
+- overflow, clipping, overlap, accidental scrolling, and empty or cramped space;
+- text wrapping, hierarchy, long values, missing content, and asset framing;
+- fixed/sticky/absolute elements, overlays, menus, and animation containment;
+- safe areas, browser chrome, virtual keyboards, and limited vertical space;
+- touch targets, focus visibility, larger text, and zoom.
 
-## Core Rule
+Evaluate tablet as a distinct range. Check intermediate widths and landscape or
+short screens instead of relying only on named device presets.
 
-Do not treat tablet as enlarged mobile or compressed desktop. Evaluate tablet as its own layout range.
+## Refine deliberately
 
-## Scope
+Decide what should scale, reflow, stack, reposition, or use an alternate composition.
+Prefer intrinsic sizing, flexible layout, bounded dimensions, and CSS over viewport
+JavaScript when CSS handles the behavior reliably. Choose breakpoints where the
+content's composition needs to change, following existing project conventions.
 
-Focus on the specified component and the directly affected layout code.
+Keep the focal element anchored and controls reachable. Do not solve fit by shrinking
+everything, hiding meaningful content, or flattening hierarchy. Keep decorative
+effects contained, preserve reduced motion, and avoid unrelated redesign or a new
+global design system unless a verified shared defect requires a shared fix.
 
-Do not redesign unrelated screens or introduce a new global design system unless the component clearly depends on a shared layout defect.
+## Validate and report
 
-## Audit
+Select representative small/large mobile, tablet portrait/landscape, laptop/desktop,
+wide, narrow-window, and short-height viewports relevant to the component. Check
+intermediate widths around changed breakpoints.
 
-Identify the component's:
+Exercise affected loading, empty, error, populated, expanded, overlay, and animation
+states, along with long text and larger text/zoom. Confirm intentional spacing and
+hierarchy, no inaccessible controls or accidental overflow, and no surrounding-page
+regression. Browser resizing does not prove physical-device behavior.
 
-- Primary focal element
-- Supporting content
-- Controls and interaction targets
-- Visual hierarchy
-- Required content
-- Decorative content
-- Anchoring and alignment behavior
-- Intended relationship to the surrounding page
-
-Then inspect for issues involving:
-
-- Overflow, clipping, overlap, or accidental scrolling
-- Excessive empty space or cramped composition
-- Poor scaling between viewport ranges
-- Tablet-specific imbalance
-- Mobile and tablet landscape behavior
-- Short screens and limited vertical space
-- Very wide screens and uncontrolled stretching
-- Text wrapping, truncation, line length, and hierarchy
-- Fixed, sticky, absolute, or viewport-based positioning
-- Modals, overlays, tooltips, menus, thought bubbles, and floating controls
-- Safe areas, browser chrome, keyboards, and device edges
-- Touch target size and spacing
-- Image, illustration, character, or animation framing
-- Background effects escaping or overpowering their container
-- Larger text and accessibility settings
-- State changes that alter height or width
-- Loading, empty, error, and populated states
-
-Test intermediate widths, not only named device presets.
-
-## Layout Principles
-
-- Preserve the intended composition rather than merely preventing overflow.
-- Decide deliberately what should scale, reflow, stack, collapse, reposition, or use an alternate composition.
-- Prefer fluid sizing, flexible layout systems, intrinsic sizing, and container-aware behavior.
-- Use controlled breakpoints only where the composition genuinely changes.
-- Prefer CSS layout over JavaScript viewport checks.
-- Use minimum and maximum dimensions to prevent elements from becoming tiny, oversized, stretched, or detached.
-- Keep focal elements visually anchored across viewport ranges.
-- Maintain readable text, clear hierarchy, and comfortable touch targets.
-- Allow a distinct tablet composition when neither the mobile nor desktop arrangement works well.
-- Keep decorative visuals contained and subordinate to the usable interface.
-- Preserve reduced-motion and accessibility behavior.
-
-## Viewport Coverage
-
-Where relevant, validate:
-
-- Small mobile portrait
-- Large mobile portrait
-- Mobile landscape
-- Small tablet portrait
-- Large tablet portrait
-- Tablet landscape
-- Standard laptop
-- Desktop
-- Wide desktop
-- Short-height screens
-- Split-screen or narrow desktop windows
-
-Exact breakpoints should follow the component's content and the project's existing conventions rather than arbitrary device labels.
-
-## State Coverage
-
-Confirm the layout remains intentional during:
-
-- Initial loading
-- Loaded content
-- Empty content
-- Error states
-- Long text or large values
-- Short text or missing optional content
-- Expanded and collapsed states
-- Open overlays, menus, or thought bubbles
-- Active animations and transitions
-- Larger text or zoomed interfaces
-
-## Guardrails
-
-- Do not make the implementation mobile-only.
-- Do not solve responsiveness by shrinking everything.
-- Do not hide meaningful content merely to make it fit.
-- Do not flatten the visual hierarchy.
-- Do not add excessive one-off media queries.
-- Do not use JavaScript layout logic when CSS can handle the behavior reliably.
-- Do not alter the component's visual identity without instruction.
-- Do not perform unrelated redesign or cleanup.
-- Do not narrate lengthy internal reasoning.
-
-If significant runtime or loading problems are discovered, flag them separately for `SEIHouse Components Performance` rather than expanding the task.
-
-## Validation
-
-Use the project's existing tools and targeted checks to verify:
-
-- No clipping, overlap, accidental overflow, or inaccessible controls
-- Intentional spacing and hierarchy at each important range
-- Tablet portrait and landscape quality
-- Mobile portrait and landscape quality
-- Stable behavior during content and state changes
-- Proper containment of overlays and animation boundaries
-- Appropriate touch targets and readable text
-- No major regression to the surrounding page
-
-Run only relevant validation. Do not broadly review the repository unless necessary.
-
-## Completion Report
-
-Provide a concise summary containing:
-
-1. The main cross-viewport problems found
-2. The layout decisions made
-3. What changes between mobile, tablet, laptop, and desktop
-4. Validation performed
-5. Any meaningful remaining risk or recommended follow-up
+Report the main layout defects, what reflows across important ranges, validation,
+and material limitations. Flag substantial runtime or loading work separately unless
+it directly causes the layout defect.

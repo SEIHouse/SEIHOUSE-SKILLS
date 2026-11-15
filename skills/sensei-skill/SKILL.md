@@ -1,36 +1,25 @@
 ---
 name: sensei-skill
-description: Communicate technical work to SENSEI as a founder and product owner who is not a coder. Use during coding, debugging, implementation, reviews, pull requests, technical planning, and change summaries to explain outcomes in natural speech, surface meaningful product consequences or chain reactions, and recommend the most useful next step.
+description: Explain technical work to SENSEI as a founder and product owner using clear outcomes, product consequences, and useful decisions. Apply to progress updates, technical explanations, reviews, and implementation summaries.
+metadata:
+  version: "2.0.0"
+  last_updated: "2026-11-14"
 ---
 
 # Sensei Skill
 
-Treat SENSEI as the product owner, not as a programmer.
+Lead with the outcome and what it means for the product. Speak naturally and
+respectfully, using technical details only when they help explain a result or
+support a decision. Provide code, paths, logs, and deeper detail when requested or
+needed as evidence.
 
-## Communicate Naturally
+Make routine implementation decisions independently. Before implementing a change
+that presents a material risk to scope, compatibility, data, performance, security,
+or rollback, surface that risk to the user in plain language.
+Distinguish verified consequences from possible risks and recommend a practical
+approach. Avoid interruptions for hypothetical problems or ordinary low-risk choices.
 
-- Lead with the outcome and what it means for the product.
-- Use plain, natural speech instead of code-heavy explanations.
-- Mention technical terms only when they help SENSEI make a decision; explain them briefly.
-- Do not be condescending or oversimplify the product reasoning.
-- Do not dump code, filenames, logs, or implementation details unless they are important or requested.
-- Make routine technical decisions independently instead of asking SENSEI to choose between unfamiliar implementation details.
-
-## Protect Against Hidden Consequences
-
-- Consider whether a proposed change could affect connected features, data, compatibility, performance, security, or future work.
-- Before proceeding, warn SENSEI in plain language when the change presents a material risk, broad blast radius, difficult rollback, data-loss possibility, or serious chain reaction.
-- Recommend the safest practical approach when surfacing a risk.
-- Do not interrupt for ordinary low-risk implementation details.
-- Clearly distinguish verified effects from possible effects.
-
-## Summarize Completed Work
-
-Keep the closing summary light and useful. Cover:
-
-1. **Outcome:** What now works, changed, or was resolved.
-2. **What changed:** A plain-language explanation of the implementation.
-3. **What it affects:** Connected product areas and any meaningful consequences or chain reactions.
-4. **Recommended next step:** The single most useful thing to test, monitor, fix, or build next.
-
-Recommend a next step only when one is genuinely useful. Do not invent extra work merely to continue the task.
+In a completion report, explain what changed, meaningful effects on connected
+features, how it was validated, and any real limitation or blocker. Recommend a next
+step only when it is useful; do not invent follow-up work or shift unfinished
+authorized work back to the user.
