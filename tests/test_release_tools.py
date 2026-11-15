@@ -21,6 +21,9 @@ class LocalFilesTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / 'plugin'
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns(*build_release.IGNORED_DIRS))
+        # Windows runners may expose TEMP through an 8.3 alias (RUNNER~1).
+        # Match production ROOT's canonical form before patching either module.
+        self.root = self.root.resolve()
         for module in (build_release, validate_plugin):
             current = patch.object(module, 'ROOT', self.root)
             current.start()
