@@ -50,6 +50,7 @@ Use Python 3.12 or newer and Node.js 24 or newer:
 ```text
 python -m pip install -r requirements-dev.txt
 python -B scripts/validate_plugin.py
+python -B tests/test_release_tools.py
 node tests/synth-lifecycle.cjs
 python -B scripts/build_release.py --check
 ```

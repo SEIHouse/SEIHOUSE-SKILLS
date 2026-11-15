@@ -23,5 +23,6 @@ jobs:
           node-version: '24'
       - run: python -m pip install -r requirements-dev.txt
       - run: python -B scripts/validate_plugin.py
+      - run: python -B tests/test_release_tools.py
       - run: node tests/synth-lifecycle.cjs
       - run: python -B scripts/build_release.py --check

@@ -28,7 +28,7 @@ function ensureAudio() {
     compressor.ratio.value = 12;
     masterGain.connect(compressor).connect(ctx.destination);
   }
-  if (ctx.state === 'suspended') {
+  if (ctx.state === 'suspended' || ctx.state === 'interrupted') {
     ctx.resume().catch(error => {
       // Replace with visible retry feedback in the instrument UI.
       console.error('Audio could not start', error);

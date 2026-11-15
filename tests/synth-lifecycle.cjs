@@ -82,7 +82,7 @@ function test(name, fn) {
 const pointer = (pointerId, clientX, clientY = 20) => ({ pointerId, clientX, clientY, button: 0, preventDefault() {} });
 const keyEvent = (code, extra = {}) => ({ code, repeat: false, target: {}, preventDefault() {}, ...extra });
 
-test('first note resumes audio, stores a consistent record, and stops only after release', () => {
+test('first note and interruption resume audio, with consistent records and release cleanup', () => {
   const e = environment();
   e.run("noteOn('kbd:KeyA', 60)");
   assert.equal(e.run('ctx.resumes'), 1);
@@ -98,6 +98,12 @@ test('first note resumes audio, stores a consistent record, and stops only after
   osc.onended();
   assert(osc.disconnected);
   assert(e.nodes.filter(n => ['filter', 'gain'].includes(n.kind)).slice(1).every(n => n.disconnected));
+  e.run("ctx.state = 'interrupted'; noteOn('kbd:KeyS', 62)");
+  assert.equal(e.run('ctx.resumes'), 2);
+  assert.equal(e.run('ctx.state'), 'running');
+  e.run("noteOn('ptr:5', 60)");
+  assert.equal(e.run('ctx.resumes'), 2);
+  e.run('releaseAll()');
 });
 
 test('overlapping pointer/keyboard inputs at one pitch retain independent ownership and feedback', () => {

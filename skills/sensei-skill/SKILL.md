@@ -13,8 +13,9 @@ respectfully, using technical details only when they help explain a result or
 support a decision. Provide code, paths, logs, and deeper detail when requested or
 needed as evidence.
 
-Make routine implementation decisions independently. Surface material changes to
-scope, compatibility, data, performance, security, or rollback in plain language.
+Make routine implementation decisions independently. Before implementing a change
+that presents a material risk to scope, compatibility, data, performance, security,
+or rollback, surface that risk to the user in plain language.
 Distinguish verified consequences from possible risks and recommend a practical
 approach. Avoid interruptions for hypothetical problems or ordinary low-risk choices.
 

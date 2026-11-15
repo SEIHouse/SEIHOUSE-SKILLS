@@ -16,6 +16,7 @@ ROOT_FILES = (
     'plugin.json', 'requirements-dev.txt',
 )
 SOURCE_DIRS = ('.codex-plugin', 'skills', 'scripts', 'tests', '.github')
+IGNORED_DIRS = {'.git', '.cache', '__pycache__', 'node_modules', '.venv'}
 
 
 def release_info():
@@ -34,7 +35,7 @@ def source_files():
     paths = [ROOT / name for name in ROOT_FILES]
     for folder in SOURCE_DIRS:
         paths.extend(path for path in (ROOT / folder).rglob('*')
-                     if path.is_file() and '__pycache__' not in path.parts
+                     if path.is_file() and not IGNORED_DIRS.intersection(path.relative_to(ROOT).parts)
                      and path.suffix not in ('.pyc', '.pyo'))
     for path in paths:
         if not path.is_file() or path.is_symlink() or not path.resolve().is_relative_to(ROOT):

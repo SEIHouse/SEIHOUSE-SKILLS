@@ -63,6 +63,11 @@ or a required human decision, report the exact pending condition without calling
 work complete. Elapsed time alone is not success. Do not manufacture reviewer
 approval or promise that future comments cannot arrive.
 
+Unless task instructions require continued monitoring, stop after 30 minutes with
+no state change and report the exact pending item without marking the work complete.
+Explicit instructions to follow a PR until its checks and feedback are resolved
+override this default wait limit.
+
 ## Report
 
 Give the branch, PR link, latest check/review status, and any blocker. Distinguish

@@ -8,7 +8,7 @@ from urllib.parse import unquote, urlsplit
 
 import yaml
 
-from build_release import ROOT, release_info
+from build_release import IGNORED_DIRS, ROOT, release_info
 
 EXPECTED_SKILLS = {
     'browser-synth-builder', 'creative-ui-translator', 'seihouse-planning',
@@ -35,7 +35,8 @@ def main():
     require(generic['repository'] == generic['homepage'] == 'https://github.com/SEIHouse/SEIHOUSE-SKILLS',
             'Repository URLs must be canonical')
     require((ROOT / codex['skills']).resolve() == ROOT / 'skills', 'Incorrect skill discovery path')
-    actual = {path.name for path in (ROOT / 'skills').iterdir() if path.is_dir()}
+    actual = {path.name for path in (ROOT / 'skills').iterdir()
+              if path.is_dir() and path.name not in IGNORED_DIRS}
     require(actual == EXPECTED_SKILLS, f'Unexpected skill discovery: {actual ^ EXPECTED_SKILLS}')
     for name in sorted(actual):
         path = ROOT / 'skills' / name / 'SKILL.md'
@@ -58,7 +59,7 @@ def main():
 
     links = 0
     for path in ROOT.rglob('*.md'):
-        if '.git' in path.relative_to(ROOT).parts:
+        if IGNORED_DIRS.intersection(path.relative_to(ROOT).parts):
             continue
         text = path.read_text(encoding='utf-8')
         require('\ufffd' not in text, f'Invalid UTF-8 replacement character: {path}')
